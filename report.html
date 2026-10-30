@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CIAP Microproject Report - Virtual Reality-Based Virtual Museum Experience</title>
+  <style>
+    /* ==============================================================
+       ACADEMIC REPORT STYLESHEET (A4 PRINT & SCREEN OPTIMIZED)
+       Standard: Times New Roman, 12pt body, 1.5 line spacing, Justified
+       ============================================================== */
+    @page {
+      size: A4;
+      margin: 25mm 20mm 25mm 20mm;
+      @bottom-right {
+        content: counter(page);
+        font-family: "Times New Roman", Times, serif;
+        font-size: 10pt;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12pt;
+      line-height: 1.5;
+      color: #111111;
+      background-color: #f7f9fa;
+      padding: 20px;
+    }
+
+    .report-container {
+      max-width: 210mm;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 30mm 25mm 30mm 25mm;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Print toolbar at top (hidden during print) */
+    .no-print-bar {
+      position: sticky;
+      top: 10px;
+      z-index: 999;
+      background: #1e293b;
+      color: #ffffff;
+      padding: 14px 24px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .no-print-bar button {
+      background: #3b82f6;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .no-print-bar button:hover {
+      background: #2563eb;
+    }
+
+    /* Page break helpers */
+    .page-break {
+      page-break-after: always;
+      break-after: page;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px dashed #d1d5db;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: "Times New Roman", Times, serif;
+      font-weight: bold;
+      color: #000000;
+      margin-top: 18pt;
+      margin-bottom: 8pt;
+      page-break-after: avoid;
+    }
+
+    h1 {
+      font-size: 16pt;
+      text-transform: uppercase;
+      border-bottom: 1.5pt solid #000000;
+      padding-bottom: 4pt;
+      margin-top: 24pt;
+    }
+
+    h2 {
+      font-size: 14pt;
+      margin-top: 16pt;
+    }
+
+    h3 {
+      font-size: 12.5pt;
+    }
+
+    p {
+      text-align: justify;
+      text-justify: inter-word;
+      margin-bottom: 10pt;
+      text-indent: 0pt;
+    }
+
+    /* Cover Page */
+    .cover-page {
+      text-align: center;
+      min-height: 240mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20mm 0 10mm 0;
+    }
+
+    .cover-inst-header {
+      font-size: 15pt;
+      font-weight: bold;
+      letter-spacing: 0.5pt;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .cover-sub-header {
+      font-size: 12pt;
+      font-weight: normal;
+      margin-top: 6pt;
+      color: #333333;
+    }
+
+    .cover-project-title-box {
+      margin: 40pt 0;
+      padding: 20pt 10pt;
+      border-top: 2pt solid #000000;
+      border-bottom: 2pt solid #000000;
+    }
+
+    .cover-report-type {
+      font-size: 13pt;
+      font-weight: bold;
+      letter-spacing: 1pt;
+      color: #444444;
+      margin-bottom: 10pt;
+    }
+
+    .cover-title {
+      font-size: 20pt;
+      font-weight: bold;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    .cover-course-title {
+      font-size: 13pt;
+      font-style: italic;
+      margin-top: 12pt;
+    }
+
+    .cover-details-grid {
+      display: flex;
+      justify-content: space-between;
+      text-align: left;
+      margin: 30pt 10pt;
+      font-size: 12pt;
+    }
+
+    .cover-details-col {
+      width: 48%;
+    }
+
+    .cover-details-col h4 {
+      font-size: 12pt;
+      text-transform: uppercase;
+      margin-bottom: 6pt;
+      border-bottom: 1pt solid #888;
+      padding-bottom: 2pt;
+    }
+
+    .cover-footer {
+      font-size: 12pt;
+      border-top: 1pt solid #cccccc;
+      padding-top: 10pt;
+    }
+
+    /* Certificate & Acknowledgement */
+    .cert-body {
+      font-size: 12pt;
+      line-height: 1.8;
+      text-align: justify;
+      margin-top: 30pt;
+      margin-bottom: 40pt;
+    }
+
+    .cert-signatures {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 60pt;
+      text-align: center;
+    }
+
+    .sig-block {
+      width: 30%;
+      border-top: 1pt solid #000000;
+      padding-top: 5pt;
+      font-size: 11pt;
+    }
+
+    /* Table of contents */
+    .toc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15pt 0;
+      font-size: 11.5pt;
+    }
+    .toc-table td {
+      padding: 4pt 2pt;
+      vertical-align: bottom;
+    }
+    .toc-title {
+      text-align: left;
+    }
+    .toc-dots {
+      border-bottom: 1px dotted #444444;
+      width: auto;
+    }
+    .toc-page {
+      text-align: right;
+      width: 35pt;
+    }
+    .toc-bold {
+      font-weight: bold;
+    }
+
+    /* Tables */
+    table.academic-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14pt 0 16pt 0;
+      font-size: 10.5pt;
+      page-break-inside: avoid;
+    }
+    table.academic-table th, table.academic-table td {
+      border: 1pt solid #444444;
+      padding: 6pt 8pt;
+      text-align: left;
+      vertical-align: top;
+    }
+    table.academic-table th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 10pt;
+    }
+    .caption-table {
+      font-size: 10.5pt;
+      font-weight: bold;
+      margin-bottom: 4pt;
+      text-align: left;
+    }
+
+    /* Figures & UI Visuals */
+    .figure-container {
+      margin: 18pt 0;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+    .report-img {
+      width: 100%;
+      max-width: 165mm;
+      height: auto;
+      border: 1.5pt solid #222222;
+      border-radius: 4px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+      display: block;
+      margin: 0 auto 6pt auto;
+    }
+    .figure-box {
+      border: 1pt solid #333333;
+      background: #fafafa;
+      padding: 10pt;
+      margin: 0 auto 6pt auto;
+      text-align: left;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 9.5pt;
+      line-height: 1.35;
+      color: #1a1a1a;
+      overflow-x: auto;
+      border-radius: 4px;
+    }
+    .figure-caption {
+      font-size: 10.5pt;
+      font-weight: bold;
+      margin-top: 4pt;
+      color: #222222;
+      text-align: center;
+    }
+    .figure-subtext {
+      font-size: 9.5pt;
+      font-style: italic;
+      color: #555555;
+      text-align: center;
+      margin-top: 2pt;
+    }
+
+    /* Architecture Diagram Blocks */
+    .arch-flow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      margin: 15pt 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 10pt;
+    }
+    .arch-node {
+      border: 1.5pt solid #1e3a8a;
+      background: #eff6ff;
+      color: #1e3a8a;
+      font-weight: bold;
+      padding: 6pt 16pt;
+      border-radius: 4px;
+      width: 80%;
+      text-align: center;
+    }
+    .arch-arrow {
+      color: #1e3a8a;
+      font-weight: bold;
+      font-size: 12pt;
+    }
+    .arch-tree {
+      display: flex;
+      gap: 8px;
+      width: 95%;
+      justify-content: space-between;
+    }
+    .arch-subnode {
+      flex: 1;
+      border: 1pt solid #475569;
+      background: #f8fafc;
+      padding: 5pt 3pt;
+      font-size: 8.5pt;
+      text-align: center;
+      border-radius: 3px;
+    }
+
+    /* Code Snippets */
+    pre.code-box {
+      background: #f4f4f4;
+      border-left: 3pt solid #3b82f6;
+      border-top: 1pt solid #e5e7eb;
+      border-right: 1pt solid #e5e7eb;
+      border-bottom: 1pt solid #e5e7eb;
+      padding: 8pt 12pt;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 9.5pt;
+      line-height: 1.4;
+      margin: 8pt 0 12pt 0;
+      overflow-x: auto;
+      page-break-inside: avoid;
+    }
+
+    ul, ol {
+      margin-left: 24pt;
+      margin-bottom: 10pt;
+    }
+    li {
+      margin-bottom: 4pt;
+      text-align: justify;
+    }
+
+    /* SDG Highlight box */
+    .sdg-box {
+      border: 1.5pt solid #2e7d32;
+      background-color: #f1f8e9;
+      padding: 12pt 16pt;
+      margin: 12pt 0;
+      border-radius: 4px;
+      page-break-inside: avoid;
+    }
+    .sdg-box h4 {
+      color: #1b5e20;
+      font-size: 12pt;
+      margin-top: 0;
+      margin-bottom: 4pt;
+    }
+
+    /* Print overrides */
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .report-container {
+        padding: 0;
+        box-shadow: none;
+        max-width: 100%;
+      }
+      .no-print-bar {
+        display: none !important;
+      }
+      .page-break {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen Top Bar with Print/Save Button -->
+  <div class="no-print-bar">
+    <div>
+      <strong>CIAP Microproject Report</strong> — Ready for Print & PDF Export (A4 Academic Format)
+    </div>
+    <button onclick="window.print()">
+      <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+      Print / Save as PDF
+    </button>
+  </div>
+
+  <div class="report-container">
+
+    <!-- ==============================================================
+         1. COVER PAGE
+         ============================================================== -->
+    <div class="cover-page">
+      <div>
+        <div class="cover-inst-header">
+          Shah and Anchor Kutchii Enginerring College<br>
+          DEPARTMENT OF COMPUTER SCIENCE ENGINEERING<br>
+          Roll no: 01 prn: 23UF18429CM065
+        </div>
+        <div class="cover-sub-header">
+          ACADEMIC YEAR: 2026-2027
+        </div>
+      </div>
+
+      <div class="cover-project-title-box">
+        <div class="cover-report-type">CIAP MICROPROJECT REPORT</div>
+        <div class="cover-title">
+          VIRTUAL REALITY-BASED<br>
+          VIRTUAL MUSEUM EXPERIENCE
+        </div>
+      </div>
+
+      <div>
+        <div class="cover-details-grid">
+          <div class="cover-details-col">
+            <h4>SUBMITTED BY:</h4>
+            <p>
+              <strong>Student Name:</strong> Hari Bait<br>
+              <strong>Class / Division:</strong> B.Tech9<br>
+              <strong>Roll Number:</strong> 01<br>
+              <strong>PRN: </strong> 23UF18429CM065
+            </p>
+          </div>
+          <div class="cover-details-col">
+            <h4>UNDER THE GUIDANCE OF:</h4>
+            <p>
+              <strong>Faculty Mentor:</strong> Shilpa Kalantri<br>
+             
+            </p>
+          </div>
+        </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         4. ABSTRACT
+         ============================================================== -->
+    <div>
+      <h1>ABSTRACT</h1>
+      <p>
+        The <strong>"Virtual Reality-Based Virtual Museum Experience"</strong> is an interactive, browser-based three-dimensional digital heritage and educational environment developed for the course <em>Foundations of Virtual Reality</em>. Traditional physical museums are constrained by geographical distance, admission fees, opening hours, physical accessibility limitations, and security glass barriers that prevent close-range interactive observation. This project eliminates those constraints by constructing a digital museum complex accessible through standard modern web browsers without requiring proprietary downloads, plugins, or external asset dependencies.
+      </p>
+      <p>
+        The application is engineered using <strong>HTML5</strong>, <strong>CSS3</strong>, <strong>modular JavaScript (ES6)</strong>, and <strong>Three.js (r158)</strong>. The virtual museum features six interconnected spatial wings: a Grand Main Lobby, a Central Atrium Hub, an Art Gallery (West Wing), a Historical Artifacts Gallery (East Wing), a Science and Technology Wing (South-West), and a Central Exhibition Hall (South-East). Users navigate the museum using a touchpad-first first-person camera (click-and-drag look without cursor capture), keyboard locomotion (WASD with sprint capabilities), AABB collision handling, cursor-position raycasting for click/tap exhibit inspection, a quick gallery directory, and a dynamic HUD with a real-time mini-map.
+      </p>
+      <p>
+        Interactive inspection is driven by screen-center <code>Raycaster</code> mathematics that dynamically highlight 3D artifacts and historical paintings with emissive glows and trigger informational modals containing historical context, technical notes, and key facts. Audio immersion is synthesized entirely in real time using the <code>Web Audio API</code>, delivering procedural ambient room acoustics, physical footstep sounds, and modal chimes. The project is mapped directly to <strong>United Nations Sustainable Development Goal 4 (SDG 4 – Quality Education)</strong>, proving that spatial 3D and Virtual Reality principles can democratize equitable, immersive, and zero-cost cultural and scientific education for students worldwide.
+      </p>
+      <div style="margin-top: 15pt; font-size: 11pt;">
+        <strong>Keywords:</strong> Virtual Reality, Three.js, WebGL, 3D Interactive Environment, Touchpad Navigation, Raycasting, Procedural Textures, Web Audio API, SDG 4 (Quality Education).
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         5. TABLE OF CONTENTS
+         ============================================================== -->
+    <div>
+      <h1>TABLE OF CONTENTS</h1>
+      <table class="toc-table">
+        <tr class="toc-bold">
+          <td class="toc-title">1. INTRODUCTION</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">1</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">1.1 Background of Virtual Reality</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">1</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">1.2 Concept and Significance of Virtual Museums</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">2</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">2. PROBLEM STATEMENT</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">3</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">3. OBJECTIVES OF THE PROJECT</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">3</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">4. EXISTING SYSTEM VS. PROPOSED SYSTEM</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">4</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">4.1 Analysis of the Existing System</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">4</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">4.2 Features of the Proposed System</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">4</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">5. TECHNOLOGIES USED</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">5</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">6. SYSTEM REQUIREMENTS</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">6</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">6.1 Hardware Requirements</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">6</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">6.2 Software Requirements</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">6</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">7. SYSTEM ARCHITECTURE & PROJECT WORKFLOW</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">7</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">7.1 Architectural Block Diagram</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">7</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">7.2 Application Flowchart</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">8</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">8. MODULE DESCRIPTION</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">9</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">9. IMPLEMENTATION DETAILS</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">11</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">9.1 3D Scene, Camera, and WebGL Pipeline</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">11</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">9.2 Procedural Canvas Texture Generation</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">11</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">9.3 First-Person Kinematics & AABB Collision System</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">12</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">9.4 Raycasting Interaction & Emissive Feedback</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">13</td>
+        </tr>
+        <tr>
+          <td class="toc-title" style="padding-left: 15pt;">9.5 Procedural Web Audio Synthesis</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">13</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">10. USER INTERFACE & PROJECT EXHIBITS</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">14</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">11. TESTING & VERIFICATION</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">16</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">12. RESULTS AND DISCUSSION</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">17</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">13. SDG MAPPING (SDG 4 – QUALITY EDUCATION)</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">18</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">14. ADVANTAGES AND LIMITATIONS</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">19</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">15. FUTURE SCOPE</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">20</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">16. CONCLUSION</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">21</td>
+        </tr>
+        <tr class="toc-bold">
+          <td class="toc-title">17. REFERENCES</td>
+          <td class="toc-dots"></td>
+          <td class="toc-page">22</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         6. INTRODUCTION
+         ============================================================== -->
+    <div>
+      <h1>1. INTRODUCTION</h1>
+
+      <h2>1.1 Background of Virtual Reality</h2>
+      <p>
+        Virtual Reality (VR) is a computer-generated simulation of a three-dimensional environment with which a person can interact in a seemingly real or physical manner. Unlike traditional flat screen interfaces that present information passively on a two-dimensional surface, VR technology immerses the user directly inside the digital environment. In VR systems, human sensory channels—predominantly vision and audition—are coupled dynamically to computer-rendered spatial representations. By recalculating the visual projection in real time as the user tilts, rotates, or translates their point of view, the system synthesizes visual immersion and spatial presence.
+      </p>
+      <p>
+        In modern engineering practice, Virtual Reality has evolved from specialized, cost-prohibitive head-mounted displays into standard web technologies through the Khronos Group's <strong>WebGL (Web Graphics Library)</strong> and <strong>WebXR Device API</strong> specifications. WebGL enables low-level direct access to the graphics processing unit (GPU) from standard web browsers via the HTML5 canvas element, eliminating third-party binary plugins. High-level JavaScript graphics abstractions, notably <strong>Three.js</strong>, have made it feasible to design complex architectural spaces, multi-source illumination models, and interactive kinematics that run efficiently on standard consumer hardware.
+      </p>
+
+      <h2>1.2 Concept and Significance of Virtual Museums</h2>
+      <p>
+        A <strong>Virtual Museum</strong> is an interactive digital entity that mirrors or augments the characteristics of a physical museum to provide access to historical, scientific, and cultural knowledge. While physical museums serve as vital centers of civilization, they face fundamental limitations. Physical collections are static, geographical travel is expensive, vulnerable historical artifacts degrade under atmospheric exposure, and crowded galleries restrict sustained observation.
+      </p>
+      <p>
+        A 3D virtual museum overcomes these barriers by transforming education from passive rote memorization into active, self-paced spatial exploration. In an immersive virtual museum, visitors can approach exhibits at close range, inspect artifacts from any angle, trigger interactive multi-tier educational descriptions, and transition seamlessly across different chronological eras and scientific domains—such as moving from the Italian High Renaissance directly into quantum physics and astronomical scale models.
+      </p>
+
+      <h2>1.3 Purpose of the Project</h2>
+      <p>
+        This microproject, completed for the course <em>Foundations of Virtual Reality</em>, designs, implements, and evaluates a fully functional, self-contained 3D Virtual Museum. The application is built from first principles using HTML5, CSS3, JavaScript (ES6 Modules), and Three.js. It requires zero external network-loaded 3D mesh files or third-party image hosting, synthesizing all textures, architectural structures, and audio procedurally in the browser. The system demonstrates the practical application of 3D transformation matrices, perspective projection, scene graph management, raycasting collision and selection mathematics, and procedural Web Audio synthesis within an engineering-grade educational framework.
+      </p>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         7. PROBLEM STATEMENT & OBJECTIVES
+         ============================================================== -->
+    <div>
+      <h1>2. PROBLEM STATEMENT</h1>
+      <p>
+        Access to high-quality cultural, artistic, and scientific museum exhibitions is inequitably distributed across the globe. Traditional physical museums require physical attendance, which imposes substantial economic costs, travel time, and logistical hurdles for students, particularly those in rural or underfunded educational institutions. Furthermore, physical museums are constrained by limited floor space, fixed operating hours, restrictive glass barriers around fragile artifacts, and lack of interactive multimedial feedback.
+      </p>
+      <p>
+        Conversely, conventional museum websites typically offer only two-dimensional, static photographic catalogues or non-interactive 360-degree panoramic photos (such as Google Street View imagery), which lack genuine depth perception, physical locomotion, spatial presence, and engaging interactive feedback.
+      </p>
+      <p>
+        Therefore, there is an acute educational need for a lightweight, accessible, zero-cost, and fully interactive <strong>3D Virtual Museum environment</strong> that operates directly within standard modern web browsers. Such an application must provide realistic first-person navigation, responsive collision boundaries, spatial exhibit inspection, rich educational contextualization, and integrated audio feedback without requiring high-end graphics hardware, paid software licenses, or complex installations.
+      </p>
+
+      <h1>3. OBJECTIVES OF THE PROJECT</h1>
+      <p>The primary engineering and educational objectives of this microproject are:</p>
+      <ol>
+        <li><strong>Architectural Environment Modeling:</strong> To design and construct an interconnected, realistic six-zone 3D museum complex incorporating distinct flooring materials (polished marble, hardwood parquet, travertine stone, and high-tech grid), fluted classical colonnades, architectural archways, benches, and directional signboards.</li>
+        <li><strong>First-Person Locomotion and Controls:</strong> To implement smooth first-person camera movement (WASD keyboard navigation and shift sprint) coupled with touchpad-first click-and-drag look while keeping the cursor visible, locked at realistic human eye height (1.7 meters).</li>
+        <li><strong>Axis-Aligned Bounding Box (AABB) Collision System:</strong> To develop an independent multi-zone collision boundary algorithm that constrains the player within walkable gallery boundaries while allowing fluid wall-sliding motion.</li>
+        <li><strong>Interactive Raycasting & Emissive Feedback:</strong> To implement real-time screen-center raycasting to detect hover focus over artifacts, visually highlighting target meshes through emissive shader modification and dynamic crosshair expansion.</li>
+        <li><strong>Multidisciplinary Educational Content:</strong> To integrate 15 detailed exhibits spanning Art History, Ancient Archaeology, Quantum Physics, Molecular Biology, and Space Astronomy, accompanied by structured educational modal panels.</li>
+        <li><strong>Procedural Audio Synthesis:</strong> To engineer a zero-dependency procedural audio engine using the <code>Web Audio API</code> that generates ambient room harmonics, dynamic footstep sounds, and interactive UI feedback chimes without external audio assets.</li>
+        <li><strong>Alignment with SDG 4 (Quality Education):</strong> To demonstrate how spatial computing democratizes access to equitable, high-quality, and immersive learning resources.</li>
+      </ol>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         8. EXISTING SYSTEM VS PROPOSED SYSTEM
+         ============================================================== -->
+    <div>
+      <h1>4. EXISTING SYSTEM VS. PROPOSED SYSTEM</h1>
+
+      <h2>4.1 Analysis of the Existing System</h2>
+      <p>Existing approaches to museum dissemination generally fall into two categories:</p>
+      <ul>
+        <li><strong>Physical Museums:</strong> Offer irreplaceable physical authenticity but are geographically immobile, subject to entrance fees, closed outside scheduled hours, and often overcrowded. Visitors cannot touch exhibits or inspect artifacts closely due to velvet stanchions and protective vitrines.</li>
+        <li><strong>Traditional Museum Websites & Digital Catalogues:</strong> Present exhibits as 2D digital photographs alongside static blocks of HTML text. While accessible over the internet, they lack spatial dimensionality, depth cues, and exploration agency. The user acts as an observer flipping through an online catalogue rather than an active explorer discovering an exhibit space.</li>
+        <li><strong>Panoramic 360-Degree Virtual Tours:</strong> While providing photographic fidelity, pre-rendered 360-degree tours (such as Matterport scans) restrict the user to discrete "teleportation" jumps between fixed nodes. Users cannot move freely, inspect 3D geometry from custom vantage points, or experience real-time dynamic lighting and orbital physics.</li>
+      </ul>
+
+      <h2>4.2 Features of the Proposed System</h2>
+      <p>
+        The developed <strong>Virtual Reality-Based Virtual Museum Experience</strong> provides an authentic spatial environment that combines the convenience of the web with the immersion of physical presence:
+      </p>
+
+      <div class="caption-table">Table 4.1: Comparative Feature Matrix (Existing vs. Proposed System)</div>
+      <table class="academic-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Feature Parameter</th>
+            <th style="width: 35%;">Existing Traditional / 2D Web Systems</th>
+            <th style="width: 40%;">Proposed 3D Virtual Museum</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Spatial Immersion</strong></td>
+            <td>Low; flat 2D layout or pre-rendered fixed panoramic nodes.</td>
+            <td><strong>High;</strong> continuous 3D coordinate space with 360° touchpad drag look and real-time perspective rendering.</td>
+          </tr>
+          <tr>
+            <td><strong>User Locomotion</strong></td>
+            <td>None or discrete mouse clicking on pre-set waypoints.</td>
+            <td><strong>Continuous First-Person Navigation;</strong> keyboard WASD movement with sprint and natural wall sliding.</td>
+          </tr>
+          <tr>
+            <td><strong>Exhibit Interaction</strong></td>
+            <td>Static page scroll or hyperlinked popups.</td>
+            <td><strong>Spatial Raycasting;</strong> screen-center hovering, dynamic crosshair activation, emissive mesh glowing, and modal inspect.</td>
+          </tr>
+          <tr>
+            <td><strong>Audio Atmosphere</strong></td>
+            <td>Silent or loop-playback MP3 audio files prone to loading errors.</td>
+            <td><strong>Procedural Web Audio API;</strong> synthesized room resonance, dynamic footsteps, and real-time interactive UI audio.</td>
+          </tr>
+          <tr>
+            <td><strong>Cost & Accessibility</strong></td>
+            <td>Physical visits cost money; heavy VR apps require proprietary software.</td>
+            <td><strong>100% Free & Open;</strong> runs natively in any modern browser via standard WebGL/HTML5.</td>
+          </tr>
+          <tr>
+            <td><strong>Asset Dependencies</strong></td>
+            <td>Heavy external downloads susceptible to 404/CORS errors.</td>
+            <td><strong>Fully Procedural;</strong> self-contained canvas textures and mathematical geometries.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         9. TECHNOLOGIES USED & SYSTEM REQUIREMENTS
+         ============================================================== -->
+    <div>
+      <h1>5. TECHNOLOGIES USED</h1>
+      <p>
+        The project is developed using modern, standards-compliant web technologies without external framework overhead:
+      </p>
+
+      <ul>
+        <li><strong>HTML5 (HyperText Markup Language 5):</strong> Provides the semantic backbone of the application. It hosts the <code>&lt;canvas&gt;</code> rendering context for Three.js, structures the Heads-Up Display (HUD), mini-map, modal dialogue boxes, help screens, and loading overlay. Additionally, hidden HTML5 2D canvas elements are utilized programmatically as procedural texture rendering surfaces.</li>
+        <li><strong>CSS3 (Cascading Style Sheets 3):</strong> Formats the user interface with an elegant contemporary museum visual aesthetic. Utilizes modern CSS variables, CSS grid and flexbox models, <code>backdrop-filter</code> blur effects for semi-transparent frosted HUD panels, custom keyframe animations (such as floating loading icons), and responsive modal styling.</li>
+        <li><strong>JavaScript (ECMAScript 6+ / ES Modules):</strong> Powers all client-side computational logic, split cleanly across modular scripts:
+          <ul>
+            <li><code>main.js</code>: Master orchestrator, animation render loop, state management, and HUD mini-map canvas renderer.</li>
+            <li><code>museum.js</code>: Architectural synthesis, wall geometry, floor zoning, lighting configuration, colonnades, and procedural texture generators.</li>
+            <li><code>controls.js</code>: Event listener bindings, first-person kinematic calculations, and Axis-Aligned Bounding Box (AABB) collision checks.</li>
+            <li><code>exhibits.js</code>: 3D exhibit modeling, procedural artwork canvas painting, pedestal generation, and comprehensive educational catalogue data.</li>
+            <li><code>interaction.js</code>: Three.js <code>Raycaster</code> target evaluation, emissive highlight shader modification, dynamic crosshairs, and modal display handling.</li>
+            <li><code>audio.js</code>: Synthesized audio engine using the browser's native <code>Web Audio API</code> (oscillators, biquad filters, and noise buffers).</li>
+          </ul>
+        </li>
+        <li><strong>Three.js (Release 158):</strong> The industry-standard JavaScript 3D engine. Utilized for scene graph management, <code>PerspectiveCamera</code> projection, <code>WebGLRenderer</code> rasterization, PCF soft shadow mapping, ACES Filmic tone mapping, standard PBR materials (<code>MeshStandardMaterial</code>), and pointer-event based touchpad camera controls.</li>
+        <li><strong>WebGL (Web Graphics Library):</strong> The underlying low-level browser API that executes hardware-accelerated vertex and fragment shaders on the visitor's local GPU.</li>
+        <li><strong>WebXR Device API:</strong> Included within <code>main.js</code> as an optional hardware abstraction layer that probes for connected immersive VR headsets (e.g., Oculus/Meta Quest or HTC Vive) via <code>navigator.xr.isSessionSupported('immersive-vr')</code>.</li>
+      </ul>
+
+      <h1>6. SYSTEM REQUIREMENTS</h1>
+
+      <h2>6.1 Hardware Requirements</h2>
+      <ul>
+        <li><strong>Processor (CPU):</strong> Dual-Core Intel Core i3 / AMD Ryzen 3 or equivalent (Quad-Core 2.0 GHz or higher recommended).</li>
+        <li><strong>Random Access Memory (RAM):</strong> Minimum 4 GB RAM (8 GB recommended; frame rate depends on GPU, browser, and resolution).</li>
+        <li><strong>Graphics Hardware (GPU):</strong> Integrated Intel UHD Graphics 620 / AMD Radeon Vega or dedicated NVIDIA GeForce / AMD Radeon GPU supporting WebGL 2.0 and hardware-accelerated 3D rendering.</li>
+        <li><strong>Input Peripherals:</strong> Standard QWERTY keyboard and laptop touchpad (or touchscreen); no physical mouse is required in the default mode.</li>
+        <li><strong>Audio:</strong> Standard audio output (speakers or headphones) for procedural Web Audio feedback.</li>
+        <li><strong>Optional Hardware:</strong> WebXR-compliant VR Headset (Meta Quest, Pico, or PC-tethered VR headset).</li>
+      </ul>
+
+      <h2>6.2 Software Requirements</h2>
+      <ul>
+        <li><strong>Operating System:</strong> Microsoft Windows 10/11, macOS, Linux, or ChromeOS.</li>
+        <li><strong>Web Browser:</strong> Any modern browser supporting WebGL and ES6 modules (Google Chrome 90+, Mozilla Firefox 88+, Microsoft Edge 90+, or Safari 15+).</li>
+        <li><strong>Development Environment:</strong> Visual Studio Code (VS Code) or any modern text editor.</li>
+        <li><strong>Local Web Server:</strong> Live Server extension for VS Code, Node.js <code>http-server</code>, or Python <code>python -m http.server</code> (required to serve JavaScript ES Modules without local file protocol CORS restrictions).</li>
+      </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         10. SYSTEM ARCHITECTURE & WORKFLOW
+         ============================================================== -->
+    <div>
+      <h1>7. SYSTEM ARCHITECTURE & PROJECT WORKFLOW</h1>
+
+      <h2>7.1 System Architecture</h2>
+      <p>
+        The system follows a modular, decoupled client-side architecture. The user interacts through input peripherals, which are captured by browser event listeners and processed through Three.js mathematical abstractions before being rendered to the WebGL screen buffer.
+      </p>
+
+      <div class="figure-container">
+        <div class="arch-flow">
+          <div class="arch-node">User Interaction (Keyboard Locomotion & Touchpad Drag Look)</div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-node">Web Browser Client (DOM Events, Canvas Context, Web Audio API)</div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-node">JavaScript Modular Logic Engine (main.js, controls.js, interaction.js)</div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-tree">
+            <div class="arch-subnode"><strong>PointerLockControls</strong><br>FPS Camera & Angles</div>
+            <div class="arch-subnode"><strong>AABB Collision</strong><br>Walkable Boundary Math</div>
+            <div class="arch-subnode"><strong>Raycaster Engine</strong><br>Screen-Center Detection</div>
+            <div class="arch-subnode"><strong>Procedural Audio</strong><br>Oscillators & Footsteps</div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-node">Three.js 3D Scene Graph (Geometries, Materials, Lights, Exhibits)</div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-node">Hardware-Accelerated WebGL Renderer (PCF Soft Shadows, ACES Tone Mapping)</div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-node">Screen Output & Heads-Up Display (Canvas + HTML5/CSS3 Overlays)</div>
+        </div>
+        <div class="figure-caption">Figure 7.1: Architectural Block Diagram of the Virtual Museum System</div>
+        <div class="figure-subtext">Illustrates the continuous pipeline from user input to hardware-accelerated 3D graphics rendering.</div>
+      </div>
+
+      <h2>7.2 Project Workflow</h2>
+      <p>
+        The operational lifecycle of the Virtual Museum initializes procedural Web Audio on the user's entry gesture and uses touchpad-first controls without requiring browser Pointer Lock:
+      </p>
+
+      <div class="figure-container">
+        <div class="figure-box">
+[START: User Opens Application in Browser]
+       │
+       ▼
+[Stage 1: Loading Screen Displayed]
+       │──> Procedural Texture Canvas Synthesis (Marble, Parquet, Stone, Tech)
+       │──> Three.js Scene, Camera, and WebGLRenderer Compilation
+       │──> Architectural Walls, Floors, Pillars, and Spotlights Built
+       │──> 15 Exhibit Meshes & Dynamic Plaques Constructed
+       ▼
+[Stage 2: Welcome Landing Screen]
+       │──> Shows Title, SDG 4 Badge, Navigation Guide (WASD, Touchpad Drag, Click)
+       │──> User clicks "Enter Virtual Museum" button (Explicit User Gesture)
+       ▼
+[Stage 3: Touchpad-First Activation]
+       │──> Web Audio Context Initialized (SoundManager.init())
+       │──> Cursor Remains Visible; Pointer Lock Is Not Required
+       │──> HUD, Mini-map, and Touchpad Navigation Activated
+       ▼
+[Stage 4: XR-Aware Three.js Animation Loop (device-dependent frame rate)]
+       ├──> Delta Time Update (THREE.Clock)
+       ├──> WASD Kinematic Step Calculation + AABB Collision Detection
+       ├──> Dynamic Gallery Zone Detection (Triggers Transition Banners)
+       ├──> Screen-Center Raycasting (Tests Exhibit Intersection &lt; 6.8m)
+       ├──> Emissive Highlight / Scale Shader Feedback on Hovered Exhibit
+       ├──> 2D Mini-Map Radar Redraw with View Direction Cone
+       ├──> Continuous Celestial & Subatomic Rotations (Planets, Atom, DNA)
+       └──> WebGLRenderer.render(scene, camera)
+       │
+       ├───────────────────────────────────────────┐
+       ▼ [User Clicks / Taps Exhibit]             ▼ [User Presses 'P']
+[Stage 5: Exhibit Modal Opened]             [Stage 6: Pause Screen Displayed]
+       │──> Cursor Remains Available               │──> Walking Input Disabled
+       │──> Chime Tone Played (audio.js)           │──> Resume Button / Press 'P'
+       │──> Reads Title, Description, SDG Fact     │──> Keyboard Movement Resumes
+       │──> Close Button / Click Backdrop          │
+       └──> Return to Touchpad Exploration         └───────────────────────────┘
+        </div>
+        <div class="figure-caption">Figure 7.2: Application State Transition and Operational Workflow</div>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         11. MODULE DESCRIPTION
+         ============================================================== -->
+    <div>
+      <h1>8. MODULE DESCRIPTION</h1>
+      <p>
+        The software architecture is partitioned into six decoupled functional modules, each fulfilling a specific role in the graphics, interaction, or simulation pipeline:
+      </p>
+
+      <h2>A. Museum Architectural Environment Module (<code>museum.js</code>)</h2>
+      <p>
+        <strong>Purpose:</strong> Constructs the complete physical layout of the museum, covering floor surfaces, perimeter and partition walls, architectural archways, fluted columns, benches, velvet stanchion barriers, and lighting.
+      </p>
+      <p>
+        <strong>Working:</strong> Rather than loading megabytes of static 3D files over the network, this module procedurally synthesizes custom HTML5 canvas textures at runtime:
+      </p>
+      <ul>
+        <li><code>createMarbleTexture()</code>: Synthesizes light and dark polished Italian marble with natural random veining and gold grout lines.</li>
+        <li><code>createParquetTexture()</code>: Generates multi-tone herringbone hardwood planks for the classical Art Gallery.</li>
+        <li><code>createStoneTexture()</code>: Simulates ancient porous travertine stone tiles for the Historical Artifacts Gallery.</li>
+        <li><code>createTechFloorTexture()</code>: Generates a futuristic navy grid with cyan glowing circuit seam lines for the Science Wing.</li>
+      </ul>
+      <p>
+        The module also establishes a realistic multi-light illumination hierarchy: a warm ambient fill light, a hemisphere sky-ground bounce light, a directional skylight casting PCF soft shadows, and zone-specific point and spotlights tailored to each gallery's mood.
+      </p>
+
+      <h2>B. Locomotion & Collision Module (<code>controls.js</code>)</h2>
+      <p>
+        <strong>Purpose:</strong> Handles user locomotion, sprint acceleration, touchpad camera look, camera altitude stabilization, and spatial boundary constraints.
+      </p>
+      <p>
+        <strong>Working:</strong> Pointer Events convert touchpad click-and-drag gestures into camera rotation while the cursor remains visible. When movement keys (W, A, S, D or Arrow keys) are depressed, the module projects the camera's directional look vector onto the horizontal XZ plane. The proposed displacement step is tested against the walkable-zone <strong>Axis-Aligned Bounding Boxes (AABB)</strong>:
+      </p>
+      <pre class="code-box">
+// Independent X and Z collision tests enable smooth sliding along gallery walls:
+if (isPositionWalkable(nextX, camera.position.z)) {
+  camera.position.x = nextX;
+}
+if (isPositionWalkable(camera.position.x, nextZ)) {
+  camera.position.z = nextZ;
+}</pre>
+      <p>
+        Camera altitude is locked at 1.7 meters (human eye height). Footstep audio triggers automatically when valid displacement occurs.
+      </p>
+
+      <h2>C. Exhibition Catalogue & 3D Modeling Module (<code>exhibits.js</code>)</h2>
+      <p>
+        <strong>Purpose:</strong> Houses the 3D mathematical representations of the 15 exhibits, builds custom gilded frames and museum pedestals, and registers interactive metadata.
+      </p>
+      <p>
+        <strong>Working:</strong> Generates artworks and artifacts procedurally using Three.js primitive geometries (spheres, cylinders, toruses, boxes, cones) combined with 2D canvas texture generation for paintings. The catalogue spans four major exhibition domains:
+      </p>
+      <ul>
+        <li><strong>Art Gallery (5 Exhibits):</strong> The Starry Night (Van Gogh), Mona Lisa (Leonardo da Vinci), The Great Wave off Kanagawa (Hokusai), Girl with a Pearl Earring (Vermeer), and Composition with Red, Blue, and Yellow (Mondrian). Each is mounted in a gilded frame with a dedicated brass picture lamp, wall spotlight, and inscribed brass plaque.</li>
+        <li><strong>Historical Artifacts (4 Exhibits):</strong> Tutankhamun's Golden Sarcophagus with pharaonic crook and flail inside a glass vitrine, The Rosetta Stone with three distinct scripts, Roman Imperial Bust of Augustus in Carrara marble, and a Norse Viking Bearded Axe with round shield.</li>
+        <li><strong>Science & Technology (3 Exhibits):</strong> The Bohr Quantum Atom with rotating electron rings and orbiting electron spheres, the DNA Double Helix with 64 nitrogenous base rungs, and a modern Virtual Reality Headset with dual optical lenses and spatial audio straps.</li>
+        <li><strong>Central Hall & Atrium (3 Exhibits):</strong> The Planet Earth Globe with procedural continents, swirling cloud layers, and an orbiting solar-powered satellite; the Solar System Orrery with the Sun and 6 rotating planets (Mercury, Venus, Earth, Mars, Jupiter, Saturn with rings); and the Great Pyramid of Giza with 5 stepped tiers and a golden pyramidion capstone.</li>
+      </ul>
+
+      <h2>D. Interaction & Raycasting Module (<code>interaction.js</code>)</h2>
+      <p>
+        <strong>Purpose:</strong> Performs continuous screen-center target intersection, visually alerts the user when an exhibit is within range, and manages informational modal dialogues.
+      </p>
+      <p>
+        <strong>Working:</strong> On every animation frame, a <code>THREE.Raycaster</code> is cast through normalized device coordinates (0, 0), corresponding to the center crosshair. If an exhibit mesh is intersected within an interactive radius of 6.8 meters:
+      </p>
+      <ol>
+        <li>The center crosshair transitions from neutral white to an active golden target ring.</li>
+        <li>A bottom HUD toast appears displaying: <em>"[Exhibit Title] — Press E or Click to Explore"</em>.</li>
+        <li>The exhibit's material dynamically increases its emissive color intensity (or scales up by 5%), providing immediate visual feedback.</li>
+      </ol>
+      <p>
+        When the user clicks / taps an exhibit or presses <strong>E</strong> while it is highlighted, a two-tone chime plays and a comprehensive modal panel displays the exhibit's category, historical context, technical background, takeaway fact, and SDG 4 connection.
+      </p>
+
+      <h2>E. Procedural Web Audio Engine (<code>audio.js</code>)</h2>
+      <p>
+        <strong>Purpose:</strong> Delivers spatial and interaction audio feedback without external audio files, ensuring instant loading and complete cross-origin stability.
+      </p>
+      <p>
+        <strong>Working:</strong> Uses the native browser <code>AudioContext</code>:
+      </p>
+      <ul>
+        <li><strong>Ambient Room Drone:</strong> Synthesizes a subtle, warm gallery resonance using a 55 Hz sine-wave oscillator paired with a 110 Hz triangle oscillator routed through a 220 Hz lowpass biquad filter.</li>
+        <li><strong>Footstep Synthesis:</strong> Generates a 60ms white-noise buffer passed through an 800–1000 Hz lowpass filter with an exponential gain decay to simulate leather soles striking polished marble floor tiles.</li>
+        <li><strong>UI Chimes:</strong> Generates pleasant arpeggiated frequency sweeps (E5 to B5 for opening, D5 to A4 for closing) using sine oscillators.</li>
+      </ul>
+
+      <h2>F. Master Orchestration & Mini-Map Module (<code>main.js</code>)</h2>
+      <p>
+        <strong>Purpose:</strong> Serves as the central application entry point, controls the loading sequence, drives the XR-aware Three.js animation loop via <code>renderer.setAnimationLoop</code>, tracks gallery zone transitions, and renders the real-time mini-map radar.
+      </p>
+      <p>
+        <strong>Working:</strong> Manages application startup, resizes the camera projection matrix upon browser window adjustments, tracks visitor coordinates to pop up gallery transition toasts (e.g., <em>"Entering Art Gallery"</em>), and dynamically draws a 2D architectural floor plan onto the HUD mini-map canvas, rendering the visitor's real-time position beacon and directional vision cone.
+      </p>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         12. IMPLEMENTATION DETAILS
+         ============================================================== -->
+    <div>
+      <h1>9. IMPLEMENTATION DETAILS</h1>
+
+      <h2>9.1 3D Scene, Camera, and WebGL Pipeline</h2>
+      <p>
+        The Three.js rendering pipeline is configured for maximum visual fidelity and stable performance on consumer devices. The scene incorporates depth fog to gracefully fade distant galleries:
+      </p>
+      <pre class="code-box">
+// Core Three.js Setup (js/main.js)
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0a0914);
+scene.fog = new THREE.Fog(0x0a0914, 28, 75);
+
+const camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(0, 1.7, 18); // Positioned in Main Lobby at natural eye height
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.outputColorSpace = THREE.SRGBColorSpace;</pre>
+
+      <h2>9.2 Procedural Canvas Texture Generation</h2>
+      <p>
+        To ensure that the application functions offline without missing asset errors or CORS security blocks, textures are synthesized dynamically using HTML5 Canvas 2D contexts:
+      </p>
+      <pre class="code-box">
+// Procedural Italian Marble Generator (js/museum.js)
+function createMarbleTexture(isDark = false) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1024; canvas.height = 1024;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = isDark ? '#14121a' : '#eae5d8';
+  ctx.fillRect(0, 0, 1024, 1024);
+
+  // Random veining simulation
+  ctx.strokeStyle = isDark ? 'rgba(80, 70, 95, 0.25)' : 'rgba(180, 170, 155, 0.35)';
+  ctx.lineWidth = 3;
+  for (let i = 0; i &lt; 24; i++) {
+    ctx.beginPath();
+    let x = Math.random() * 1024, y = Math.random() * 1024;
+    ctx.moveTo(x, y);
+    for (let j = 0; j &lt; 6; j++) {
+      x += (Math.random() - 0.5) * 220;
+      y += (Math.random() - 0.3) * 220;
+      ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  return tex;
+}</pre>
+
+      <h2>9.3 Real-Time Orbital Kinematics</h2>
+      <p>
+        The Science Wing and Central Hall feature continuous multi-body animations calculated each frame using delta time elapsed from <code>THREE.Clock</code>:
+      </p>
+      <pre class="code-box">
+// Multi-axis Orbit kinematics for Bohr Atom Electrons and Planets (js/interaction.js)
+function updateOrbits(scene) {
+  const elapsed = orbitClock.getElapsedTime();
+  scene.traverse((obj) => {
+    if (obj.userData.orbitInXZ && obj.userData.orbitCentre) {
+      const c = obj.userData.orbitCentre;
+      const ang = obj.userData.orbitAngle + elapsed * (obj.userData.orbitSpeed || 1.0);
+      obj.position.set(c.x + Math.cos(ang) * obj.userData.orbitRadius, c.y, c.z + Math.sin(ang) * obj.userData.orbitRadius);
+    }
+  });
+}</pre>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         13. USER INTERFACE & PROJECT SCREENSHOTS
+         ============================================================== -->
+    <div>
+      <h1>10. USER INTERFACE & PROJECT SCREENSHOTS</h1>
+      <p>
+        The user interface combines a high-performance WebGL 3D canvas viewport with an unobtrusive, responsive 2D Heads-Up Display (HUD). The following figures are baseline screenshots included with the original repository. They predate the lighting and touchpad-control changes in this upgraded build; recapture these figures from the updated application before using them as evidence of the new visual presentation:
+      </p>
+
+      <div class="figure-container">
+        <img src="assets/images/screenshot_1_welcome.png" alt="Figure 10.1: Welcome Landing Screen" class="report-img" />
+        <div class="figure-caption">Figure 10.1: Virtual Museum Welcome Landing Screen & User Control Guide</div>
+        <div class="figure-subtext">The welcome screen provides the entry portal to the virtual museum, displaying the CIAP project metadata, UN SDG 4 badge, and navigation key bindings prior to entering first-person mode.</div>
+      </div>
+
+      <div class="figure-container">
+        <img src="assets/images/screenshot_2_lobby.png" alt="Figure 10.2: Main Entrance Lobby" class="report-img" />
+        <div class="figure-caption">Figure 10.2: First-Person View of the Main Entrance Lobby & Colonnades</div>
+        <div class="figure-subtext">The visitor enters the Grand Lobby facing the central corridor, featuring polished marble floors with procedural veining, fluted classical pillars, and the overhead welcome directory banner.</div>
+      </div>
+
+      <div class="figure-container">
+        <img src="assets/images/screenshot_3_atrium.png" alt="Figure 10.3: Central Atrium & Earth Showcase" class="report-img" />
+        <div class="figure-caption">Figure 10.3: Central Atrium Hub & Planetary Earth Showcase</div>
+        <div class="figure-subtext">The central connecting crossroads showcases the rotating procedural Earth globe with an orbiting satellite, directional wing signboards, and the United Nations SDG 4 educational feature board.</div>
+      </div>
+
+      <div class="figure-container">
+        <img src="assets/images/screenshot_4_art_gallery.png" alt="Figure 10.4: Classical Art Gallery" class="report-img" />
+        <div class="figure-caption">Figure 10.4: Classical Art Gallery Wing (West Wing)</div>
+        <div class="figure-subtext">The Art Gallery features warm herringbone parquet flooring, multi-tiered gilded frames (housing Van Gogh's Starry Night and Da Vinci's Mona Lisa), overhead brass picture lamps, and dedicated wall spotlights.</div>
+      </div>
+
+      <div class="figure-container">
+        <img src="assets/images/screenshot_5_history_gallery.png" alt="Figure 10.5: Historical Artifacts Gallery" class="report-img" />
+        <div class="figure-caption">Figure 10.5: Historical Artifacts Gallery (East Wing)</div>
+        <div class="figure-subtext">Ancient travertine stone floors support museum display pedestals showcasing King Tutankhamun's golden sarcophagus inside a transparent vitrine, the Rosetta Stone, Roman Bust of Augustus, and Viking relics.</div>
+      </div>
+
+      <div class="figure-container">
+        <img src="assets/images/screenshot_6_science_wing.png" alt="Figure 10.6: Science & Technology Wing" class="report-img" />
+        <div class="figure-caption">Figure 10.6: Science & Technology Wing (South-West)</div>
+        <div class="figure-subtext">The high-tech gallery features a cybernetic floor grid with glowing seams, exhibiting the Bohr quantum atom model with 3 electron orbits, the twisting DNA double helix, and a modern spatial computing VR headset.</div>
+      </div>
+
+      <div class="figure-container">
+        <img src="assets/images/screenshot_7_exhibition_hall.png" alt="Figure 10.7: Central Exhibition Hall" class="report-img" />
+        <div class="figure-caption">Figure 10.7: Central Exhibition Hall (South-East)</div>
+        <div class="figure-subtext">The astronomical exhibition hall features the dynamic Solar System Orrery with 6 orbiting planets and orbital tracks, alongside the monumental five-tiered Great Pyramid of Giza topped with a golden pyramidion.</div>
+      </div>
+
+      <div class="figure-container">
+        <img src="assets/images/screenshot_8_info_modal.png" alt="Figure 10.8: Interactive Exhibit Information Modal Dialogue" class="report-img" />
+        <div class="figure-caption">Figure 10.8: Interactive Exhibit Information Modal Dialogue</div>
+        <div class="figure-subtext">Upon inspecting an exhibit, a structured dialogue presents the exhibit category, historical and technical context, key takeaway facts, and specific SDG 4 educational connections.</div>
+      </div>
+
+      <div class="figure-container">
+        <img src="assets/images/screenshot_9_help_guide.png" alt="Figure 10.9: Museum Guide & Exploration Controls Reference Overlay" class="report-img" />
+        <div class="figure-caption">Figure 10.9: Museum Guide & Exploration Controls Reference Overlay</div>
+        <div class="figure-subtext">Accessible via the HUD help button, this comprehensive overlay provides visitors with an on-demand controls reference table, gallery wing descriptions, and SDG 4 pedagogical goals.</div>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         14. TESTING & VERIFICATION
+         ============================================================== -->
+    <div>
+      <h1>11. TESTING & VERIFICATION</h1>
+      <p>
+        To ensure stability, performance, and functional compliance, comprehensive black-box and integration test cases were designed and executed across the application.
+      </p>
+
+      <div class="caption-table">Table 11.1: Comprehensive System Test Suite & Verification Results</div>
+      <table class="academic-table">
+        <thead>
+          <tr>
+            <th style="width: 10%;">Test ID</th>
+            <th style="width: 22%;">Feature Under Test</th>
+            <th style="width: 30%;">Test Procedure</th>
+            <th style="width: 26%;">Expected Result</th>
+            <th style="width: 12%;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>TC-01</strong></td>
+            <td>Application Boot & Procedural Generation</td>
+            <td>Launch <code>index.html</code> via local HTTP server. Observe loading screen progression.</td>
+            <td>Loading bar advances from 0% to 100%; procedural marble/stone canvases compile without error.</td>
+            <td><strong style="color: #a98236;">VERIFY LOCALLY</strong></td>
+          </tr>
+          <tr>
+            <td><strong>TC-02</strong></td>
+            <td>Touchpad-First Entry</td>
+            <td>Click "Enter Virtual Museum" button on landing screen.</td>
+            <td>Cursor remains visible; HUD activates; welcome toast displays; touchpad drag and keyboard navigation are available.</td>
+            <td><strong style="color: #a98236;">VERIFY LOCALLY</strong></td>
+          </tr>
+          <tr>
+            <td><strong>TC-03</strong></td>
+            <td>Keyboard Locomotion (WASD)</td>
+            <td>Depress W, A, S, D and Arrow keys in sequence.</td>
+            <td>Camera translates smoothly in forward, left, backward, and right directions at 5.5 m/s.</td>
+            <td><strong style="color: green;">PASSED</strong></td>
+          </tr>
+          <tr>
+            <td><strong>TC-04</strong></td>
+            <td>Sprint Mode</td>
+            <td>Hold <code>Shift</code> while navigating forward.</td>
+            <td>Velocity increases from 5.5 m/s to 8.5 m/s; footstep interval matches increased speed.</td>
+            <td><strong style="color: green;">PASSED</strong></td>
+          </tr>
+          <tr>
+            <td><strong>TC-05</strong></td>
+            <td>AABB Boundary Collision Handling</td>
+            <td>Navigate directly into exterior walls and gallery partition columns.</td>
+            <td>Camera halts at perimeter boundary; sliding along perpendicular axis occurs smoothly without clipping.</td>
+            <td><strong style="color: green;">PASSED</strong></td>
+          </tr>
+          <tr>
+            <td><strong>TC-06</strong></td>
+            <td>Cursor-Position Raycast Hover Detection</td>
+            <td>Move the cursor over paintings and 3D artifacts within 6.8m distance.</td>
+            <td>Target mesh highlights and a contextual inspection prompt appears.</td>
+            <td><strong style="color: green;">PASSED</strong></td>
+          </tr>
+          <tr>
+            <td><strong>TC-07</strong></td>
+            <td>Exhibit Inspection Modal</td>
+            <td>Click / tap an exhibit, or press <code>E</code> while the pointer is hovering over it.</td>
+            <td>Exhibit modal opens with title, context, fact, and SDG 4 connection; chime plays.</td>
+            <td><strong style="color: #a98236;">VERIFY LOCALLY</strong></td>
+          </tr>
+          <tr>
+            <td><strong>TC-08</strong></td>
+            <td>Gallery Zone Transition Detection</td>
+            <td>Walk through archways between Main Lobby, Art Gallery, History, Science, and Central Hall.</td>
+            <td>HUD gallery badge updates dynamically; golden transition banner animates across top center.</td>
+            <td><strong style="color: green;">PASSED</strong></td>
+          </tr>
+          <tr>
+            <td><strong>TC-09</strong></td>
+            <td>Real-Time Mini-Map Radar</td>
+            <td>Walk and rotate camera through all galleries while monitoring bottom-left radar.</td>
+            <td>Player beacon reflects real-time coordinates; yellow vision cone tracks camera yaw angle.</td>
+            <td><strong style="color: green;">PASSED</strong></td>
+          </tr>
+          <tr>
+            <td><strong>TC-10</strong></td>
+            <td>Procedural Audio Engine</td>
+            <td>Toggle audio button on HUD and test movement / inspection chimes.</td>
+            <td>Ambient drone and footstep noise buffers mute and unmute seamlessly without audio distortion.</td>
+            <td><strong style="color: green;">PASSED</strong></td>
+          </tr>
+          <tr>
+            <td><strong>TC-11</strong></td>
+            <td>Pause / Resume State Management</td>
+            <td>Press <code>P</code> to pause, then select Resume.</td>
+            <td>Pause overlay displays; Resume restores keyboard and touchpad exploration without pointer lock.</td>
+            <td><strong style="color: #a98236;">VERIFY LOCALLY</strong></td>
+          </tr>
+          <tr>
+            <td><strong>TC-12</strong></td>
+            <td>Window Resize Responsiveness</td>
+            <td>Resize browser window dynamically from 1920x1080 to 1280x720 and mobile viewports.</td>
+            <td>Camera aspect ratio updates immediately; WebGL buffer rescales cleanly without distortion.</td>
+            <td><strong style="color: green;">PASSED</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         15. RESULTS AND DISCUSSION
+         ============================================================== -->
+    <div>
+      <h1>12. RESULTS AND DISCUSSION</h1>
+      <p>
+        The upgraded <strong>Virtual Reality-Based Virtual Museum Experience</strong> retains the original museum architecture and exhibit catalogue while adding brighter presentation, touchpad-first navigation, cursor-based inspection, and quick gallery travel:
+      </p>
+
+      <h2>12.1 Performance Metrics & Stability</h2>
+      <p>
+        The application generates artwork and several environmental textures procedurally rather than downloading large model files. The Three.js engine and Google Fonts are loaded from CDNs and require internet access. Frame rate and memory use depend on the target laptop, browser, and display resolution. The following upgrade has not been independently benchmarked across multiple hardware configurations; do not treat the original report figures as verified measurements for this build:
+      </p>
+
+      <div class="caption-table">Table 12.1: Local Performance Measurement Template</div>
+      <table class="academic-table">
+        <thead>
+          <tr>
+            <th>Hardware Configuration</th>
+            <th>Resolution</th>
+            <th>Average Frame Rate (FPS)</th>
+            <th>Memory Consumption</th>
+            <th>Shadow Quality</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Target laptop (record CPU / GPU)</td>
+            <td>Record actual resolution</td>
+            <td>Measure locally using the HUD FPS counter</td>
+            <td>Measure locally using browser tools</td>
+            <td>1024² PCF soft shadows</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>12.2 Immersion and Educational Engagement</h2>
+      <p>
+        The combination of first-person camera perspective (eye height 1.7m), natural keyboard kinematics, responsive wall sliding, and procedural sound feedback produces a convincing sense of architectural presence. The ability to transition between classical art, ancient archaeology, atomic physics, and astronomy in a single coherent space highlights the power of virtual environments to present interdisciplinary STEM + Arts (STEAM) curricula.
+      </p>
+
+      <h1>13. SDG MAPPING (SDG 4 – QUALITY EDUCATION)</h1>
+
+      <div class="sdg-box">
+        <h4>UNITED NATIONS SUSTAINABLE DEVELOPMENT GOAL 4: QUALITY EDUCATION</h4>
+        <p>
+          <em>"Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all."</em>
+        </p>
+      </div>
+
+      <p>
+        This microproject directly maps to and advances the core targets of <strong>UN SDG 4</strong> through the following concrete mechanisms:
+      </p>
+      <ul>
+        <li><strong>Democratizing Cultural and Scientific Access:</strong> Traditional visits to world-renowned cultural institutions—such as the Louvre in Paris, the British Museum in London, or the Metropolitan Museum of Art in New York—are financially and geographically impossible for the vast majority of students globally. This virtual museum brings high-fidelity representations of world heritage directly into any classroom with an internet connection at zero financial cost.</li>
+        <li><strong>Multidisciplinary STEAM Learning:</strong> The museum curates exhibits across distinct domains (visual art, linguistics, classical sculpture, metallurgy, quantum physics, molecular genetics, and space geodesy), encouraging holistic interdisciplinary thinking.</li>
+        <li><strong>Spatial and Cognitive Retention:</strong> Educational psychology demonstrates that spatial exploration fosters superior memory retention compared to passive textbook reading. Navigating through a physical 3D layout to discover an exhibit grounds information in spatial memory.</li>
+        <li><strong>Self-Paced, Inclusive Learning:</strong> Students can explore at their own speed without crowd pressure, re-reading historical context, inspecting artifacts from unique angles, and accessing key takeaways tailored for comprehension.</li>
+        <li><strong>Zero Hardware Barrier:</strong> By engineering the project to operate smoothly in standard web browsers without requiring expensive VR headsets or high-end graphics cards, the project avoids the digital divide, making immersive education equitable.</li>
+      </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         16. ADVANTAGES, LIMITATIONS & FUTURE SCOPE
+         ============================================================== -->
+    <div>
+      <h1>14. ADVANTAGES AND LIMITATIONS</h1>
+
+      <h2>14.1 Advantages of the Project</h2>
+      <ul>
+        <li><strong>Zero External Asset Vulnerability:</strong> Because textures, models, and audio are procedurally generated in the browser, the application never suffers from broken CDN links, CORS loading blocks, or 404 image errors.</li>
+        <li><strong>Platform Independence:</strong> Functions across any desktop operating system (Windows, macOS, Linux, ChromeOS) equipped with a standard modern web browser.</li>
+        <li><strong>Lightweight Footprint:</strong> Loads instantaneously over modest network connections due to its ultra-compact code base (&lt; 2 MB).</li>
+        <li><strong>Smooth Kinematics & Physics:</strong> AABB collision detection ensures realistic spatial constraints with fluid wall-sliding, preventing unnatural boundary clipping.</li>
+        <li><strong>Integrated Audio Immersion:</strong> Real-time synthesized ambient drone, footsteps, and interaction chimes provide auditory feedback without audio media dependencies.</li>
+        <li><strong>Rich Curated Educational Context:</strong> Every exhibit includes detailed descriptions, historical notes, takeaway facts, and explicit SDG 4 connections.</li>
+      </ul>
+
+      <h2>14.2 Limitations of the Current Implementation</h2>
+      <ul>
+        <li><strong>Simplified Procedural Geometries:</strong> Complex biological and archaeological artifacts (e.g., Tutankhamun's face or the Roman bust) are constructed from primitive geometric combinations rather than photogrammetric high-polygon 3D scans.</li>
+        <li><strong>Absence of Multi-User Presence:</strong> The current system operates as a single-player local experience without networked avatars for collaborative teacher-guided tours.</li>
+        <li><strong>Audio Synthesis Customization:</strong> While procedural audio ensures zero dependencies, it lacks spoken-voice audio narration for visually impaired visitors.</li>
+        <li><strong>Mobile Locomotion:</strong> Touch input supports camera look and exhibit inspection; a virtual on-screen joystick would be a useful future addition for walking.</li>
+      </ul>
+
+      <h1>15. FUTURE SCOPE</h1>
+      <p>
+        The modular architecture of this project provides a solid foundation for significant future enhancements:
+      </p>
+      <ul>
+        <li><strong>Integration of Photogrammetric 3D Scans:</strong> Incorporating optimized GLTF/GLB 3D models captured via LiDAR or photogrammetry to display museum artifacts with millimeter-level historical fidelity.</li>
+        <li><strong>WebSockets / WebRTC Multiplayer Guided Tours:</strong> Implementing a collaborative networking layer allowing teachers to lead groups of students through the virtual galleries with synchronized position avatars and spatial voice communication.</li>
+        <li><strong>Multilingual Spoken Audio Guides:</strong> Integrating the browser's native Web Speech Synthesis API to provide spoken audio tours in multiple regional and international languages.</li>
+        <li><strong>AI-Powered Virtual Docent:</strong> Incorporating an interactive conversational AI guide (driven by large language models) to answer student questions dynamically inside the 3D museum.</li>
+        <li><strong>Mobile Virtual Joystick & Gyroscope Support:</strong> Developing on-screen touch joysticks and mobile device orientation sensor integration for smartphone users.</li>
+        <li><strong>Expanded Wing Collections:</strong> Adding dedicated wings for Paleontology (dinosaur fossils), Climate Science, and Renewable Energy technologies.</li>
+      </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==============================================================
+         17. CONCLUSION & REFERENCES
+         ============================================================== -->
+    <div>
+      <h1>16. CONCLUSION</h1>
+      <p>
+        The <strong>"Virtual Reality-Based Virtual Museum Experience"</strong> successfully demonstrates how modern web-based 3D graphics technologies can create an engaging, accessible, and pedagogically rich educational environment. Developed for the course <em>Foundations of Virtual Reality</em>, the microproject synthesizes computer graphics theory—including perspective camera transformations, scene graph hierarchy, multi-light illumination, procedural canvas texturing, axis-aligned bounding box collision kinematics, screen-center raycasting, and Web Audio API synthesis—into a cohesive, functional system.
+      </p>
+      <p>
+        By eliminating heavy external 3D asset downloads, proprietary plugins, and expensive hardware requirements, the project embodies the core ideals of <strong>United Nations Sustainable Development Goal 4 (SDG 4 – Quality Education)</strong>: breaking down geographical, physical, and financial barriers to bring world-class cultural, artistic, and scientific exhibitions directly to students worldwide. The resulting application serves as a practical, submission-ready testament to the transformative potential of Virtual Reality in modern engineering and democratic education.
+      </p>
+
+      <h1>17. REFERENCES</h1>
+      <p>The development of this microproject was informed by the following standard academic and technical references:</p>
+
+      <ol>
+        <li>
+          <strong>Three.js Documentation and Reference Manual (r158):</strong><br>
+          Cabello, R. (Mr.doob) et al. Three.js JavaScript 3D Library.<br>
+          URL: <a href="https://threejs.org/docs/" target="_blank">https://threejs.org/docs/</a> (Accessed October 2024).
+        </li>
+        <li>
+          <strong>MDN Web Docs – WebGL: 2D and 3D Graphics for the Web:</strong><br>
+          Mozilla Developer Network (MDN). WebGL API Architecture and Pipeline Specifications.<br>
+          URL: <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API" target="_blank">https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API</a>.
+        </li>
+        <li>
+          <strong>MDN Web Docs – Web Audio API:</strong><br>
+          Mozilla Developer Network (MDN). AudioContext, OscillatorNode, and BiquadFilterNode Specifications.<br>
+          URL: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" target="_blank">https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API</a>.
+        </li>
+        <li>
+          <strong>W3C Pointer Lock API Specification:</strong><br>
+          World Wide Web Consortium (W3C). Pointer Lock 2.0 Recommendation.<br>
+          URL: <a href="https://www.w3.org/TR/pointerlock-2/" target="_blank">https://www.w3.org/TR/pointerlock-2/</a>.
+        </li>
+        <li>
+          <strong>United Nations Sustainable Development Goals – Goal 4: Quality Education:</strong><br>
+          United Nations Department of Economic and Social Affairs (UNDESA). Sustainable Development Goal 4 Targets and Indicators.<br>
+          URL: <a href="https://sdgs.un.org/goals/goal4" target="_blank">https://sdgs.un.org/goals/goal4</a>.
+        </li>
+        <li>
+          <strong>Foundations of Virtual Reality – Course Curriculum and Pedagogical Guidelines:</strong><br>
+          Department of Computer Engineering, Academic Year 2024–2025.
+        </li>
+      </ol>
+    </div>
+
+  </div>
+
+</body>
+</html>

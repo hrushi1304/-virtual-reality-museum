@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Virtual Reality-Based Virtual Museum Experience – An interactive 3D educational experience built with Three.js. Explore art, history, and science in a fully immersive virtual museum." />
+  <title>Virtual Reality Museum Experience | Foundations of VR</title>
+
+  <!-- Google Fonts: Cormorant Garamond, Playfair Display, and Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- ============================================================
+       1. LOADING SCREEN
+       Shown during procedural texture synthesis and geometry compilation
+  ============================================================ -->
+  <div id="loading-screen">
+    <div class="loader-content">
+      <div class="loader-logo">
+        <div class="loader-icon">🏛️</div>
+      </div>
+      <h1 class="loader-title">Virtual Museum</h1>
+      <p class="loader-subtitle">Foundations of Virtual Reality · CIAP Project</p>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar" id="loader-bar"></div>
+      </div>
+      <p class="loader-status" id="loader-status">Initializing WebGL rendering engine…</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       2. WELCOME / LANDING SCREEN
+       Shown before entering first-person mode
+  ============================================================ -->
+  <div id="welcome-screen" class="hidden">
+    <div class="welcome-overlay"></div>
+    <div class="welcome-content">
+      <div class="welcome-badge">CIAP ACADEMIC PROJECT · FOUNDATIONS OF VIRTUAL REALITY</div>
+      <h1 class="welcome-title">
+        Virtual Reality-Based<br />
+        <span class="welcome-title-accent">Virtual Museum</span><br />
+        Experience
+      </h1>
+      <p class="welcome-subtitle">Explore &nbsp;•&nbsp; Learn &nbsp;•&nbsp; Experience</p>
+      <p class="welcome-desc">
+        An Interactive 3D Educational Experience<br />
+        <span class="welcome-sdg">🎓 Contributing to SDG 4 – Quality Education</span>
+      </p>
+
+      <button id="enter-btn" class="btn-enter" aria-label="Enter Virtual Museum">
+        <span class="btn-icon">🏛️</span>
+        Enter Virtual Museum
+      </button>
+
+      <div class="welcome-controls">
+        <div class="ctrl-item"><kbd>W A S D</kbd><span>Move</span></div>
+        <div class="ctrl-item"><kbd>Shift</kbd><span>Sprint</span></div>
+        <div class="ctrl-item"><kbd>Touchpad drag</kbd><span>Look Around</span></div>
+        <div class="ctrl-item"><kbd>Click / Tap</kbd><span>Inspect Exhibit</span></div>
+        <div class="ctrl-item"><kbd>P</kbd><span>Pause</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       3. THREE.JS CANVAS CONTAINER
+  ============================================================ -->
+  <div id="canvas-container"></div>
+
+  <!-- ============================================================
+       4. HUD – HEADS-UP DISPLAY
+  ============================================================ -->
+  <div id="hud" class="hidden">
+    <!-- Interactive Crosshair -->
+    <div id="crosshair">
+      <div class="crosshair-h"></div>
+      <div class="crosshair-v"></div>
+      <div class="crosshair-dot"></div>
+      <div class="crosshair-ring"></div>
+    </div>
+
+    <!-- Touchpad navigation reminder -->
+    <div id="navigation-hint">Touchpad: click + drag to look · WASD to walk · click an exhibit to inspect</div>
+
+    <!-- Current Gallery Indicator (Top-Left) -->
+    <div id="gallery-label">
+      <span class="gallery-icon">🏛️</span>
+      <span id="gallery-name">Main Lobby</span>
+    </div>
+
+    <!-- Quick Actions Toolbar (Top-Right) -->
+    <div id="hud-actions">
+      <button id="gallery-guide-btn" class="hud-btn" title="Choose a gallery">⌖ Explore</button>
+      <button id="audio-toggle-btn" class="hud-btn" title="Toggle Sound">🔊 Sound</button>
+      <button id="fullscreen-btn" class="hud-btn" title="Toggle Fullscreen">⛶ Fullscreen</button>
+      <button id="help-btn" class="hud-btn hud-help-btn" title="Controls Reference">?</button>
+    </div>
+
+    <!-- Interaction Prompt (Bottom-Center) -->
+    <div id="interaction-prompt" class="hidden">
+      <span id="prompt-text">Press <kbd>E</kbd> to Explore</span>
+    </div>
+
+    <!-- Mini-Map Radar (Bottom-Left) -->
+    <div id="minimap-container">
+      <div class="minimap-title">🧭 Museum Map</div>
+      <canvas id="minimap-canvas" width="130" height="120"></canvas>
+    </div>
+
+    <!-- System Info & FPS Counter (Bottom-Right) -->
+    <div id="hud-footer">
+      <span id="hud-fps">60 fps</span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       5. QUICK GALLERY NAVIGATOR
+  ============================================================ -->
+  <div id="gallery-guide" class="hidden" role="dialog" aria-modal="true" aria-labelledby="gallery-guide-title">
+    <div class="gallery-guide-inner">
+      <button id="gallery-guide-close" aria-label="Close gallery navigator">✕</button>
+      <p class="guide-eyebrow">VIRTUAL MUSEUM DIRECTORY</p>
+      <h2 id="gallery-guide-title">Choose your next destination</h2>
+      <p class="guide-copy">Jump directly to a gallery. You can still explore freely using the keyboard and touchpad.</p>
+      <div class="gallery-guide-grid">
+        <button class="gallery-destination" data-x="0" data-z="18.5" data-yaw="0"><span>01</span><strong>Main Lobby</strong><small>Welcome & orientation</small></button>
+        <button class="gallery-destination" data-x="0" data-z="0.5" data-yaw="0"><span>02</span><strong>Central Atrium</strong><small>Earth & museum overview</small></button>
+        <button class="gallery-destination" data-x="-18" data-z="8" data-yaw="1.5708"><span>03</span><strong>Art Gallery</strong><small>Paintings & visual culture</small></button>
+        <button class="gallery-destination" data-x="18" data-z="8" data-yaw="-1.5708" data-gallery="Historical Artifacts Gallery"><span>04</span><strong>History Gallery</strong><small>Ancient objects & heritage</small></button>
+        <button class="gallery-destination" data-x="-14" data-z="-17" data-yaw="0" data-gallery="Science &amp; Technology Wing"><span>05</span><strong>Science Wing</strong><small>Physics, biology & technology</small></button>
+        <button class="gallery-destination" data-x="14" data-z="-17" data-yaw="1.5708" data-gallery="Central Exhibition Hall"><span>06</span><strong>Exhibition Hall</strong><small>Space & ancient engineering</small></button>
+      </div>
+      <p class="guide-footnote">Keyboard shortcut: press <kbd>G</kbd> to open this directory.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       6. GALLERY TRANSITION TOAST BANNER
+  ============================================================ -->
+  <div id="gallery-transition" class="hidden">
+    <div class="gt-content">
+      <div class="gt-line"></div>
+      <h2 id="gt-name">Art Gallery</h2>
+      <div class="gt-line"></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       6. EXHIBIT INFORMATION MODAL PANEL
+  ============================================================ -->
+  <div id="info-panel" class="hidden" role="dialog" aria-modal="true">
+    <div class="info-panel-inner">
+      <button id="info-close" aria-label="Close exhibit details">✕</button>
+
+      <div class="info-category" id="info-category">EXHIBIT CATEGORY</div>
+      <h2 class="info-title" id="info-title">Exhibit Title</h2>
+      <div class="info-divider"></div>
+
+      <div class="info-scrollable">
+        <p class="info-description" id="info-description">Description text.</p>
+
+        <h3 class="info-subheading">Historical & Technical Context</h3>
+        <p class="info-extra" id="info-extra">Educational context.</p>
+
+        <div class="info-fact-box" id="info-fact-box">
+          <span class="fact-icon">💡</span>
+          <span id="info-fact">Fascinating takeaway fact.</span>
+        </div>
+
+        <div class="info-sdg-box">
+          <span class="sdg-icon">🎓</span>
+          <span id="info-sdg">SDG 4 Quality Education connection.</span>
+        </div>
+      </div>
+
+      <div class="info-footer-hint">Click anywhere outside or press <kbd>ESC</kbd> to return to museum</div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       7. HELP / CONTROLS REFERENCE OVERLAY
+  ============================================================ -->
+  <div id="help-overlay" class="hidden">
+    <div class="help-inner">
+      <button id="help-close" aria-label="Close help">✕</button>
+      <h2>🏛️ Virtual Museum Guide</h2>
+      <p class="help-tagline">Foundations of Virtual Reality CIAP Project</p>
+
+      <h3>Exploration Controls</h3>
+      <table class="help-table">
+        <tr>
+          <td><kbd>W / A / S / D</kbd></td>
+          <td>Walk Forward, Left, Backward, Right</td>
+        </tr>
+        <tr>
+          <td><kbd>Shift</kbd> (Hold)</td>
+          <td>Sprint / Walk Faster</td>
+        </tr>
+        <tr>
+          <td><kbd>Touchpad click + drag</kbd></td>
+          <td>Look around in any direction. No mouse or pointer lock required.</td>
+        </tr>
+        <tr>
+          <td><kbd>Click / Tap</kbd></td>
+          <td>Inspect the exhibit under the pointer</td>
+        </tr>
+        <tr>
+          <td><kbd>E</kbd></td>
+          <td>Inspect the currently highlighted exhibit</td>
+        </tr>
+        <tr>
+          <td><kbd>P</kbd></td>
+          <td>Pause / resume walking</td>
+        </tr>
+        <tr>
+          <td><kbd>G</kbd></td>
+          <td>Open the gallery directory for instant travel</td>
+        </tr>
+        <tr>
+          <td><kbd>F</kbd></td>
+          <td>Toggle fullscreen</td>
+        </tr>
+      </table>
+
+      <h3>Museum Wings & Layout</h3>
+      <ul class="help-wings-list">
+        <li><strong>🏛️ Main Lobby & Entrance:</strong> Welcome directory & information center</li>
+        <li><strong>🌍 Central Atrium:</strong> Planet Earth, orbiting satellite & SDG 4 feature wall</li>
+        <li><strong>🖼️ Art Gallery (West Wing):</strong> Starry Night, Mona Lisa, Great Wave, Vermeer</li>
+        <li><strong>🏺 Historical Artifacts (East Wing):</strong> Tutankhamun Sarcophagus, Rosetta Stone, Roman Bust
+        </li>
+        <li><strong>🔬 Science & Technology (South-West):</strong> Bohr Atom, DNA Double Helix, VR Headset</li>
+        <li><strong>🪐 Central Exhibition Hall (South-East):</strong> Solar System Orrery & Great Pyramid</li>
+      </ul>
+
+      <h3>🎓 SDG 4: Quality Education Alignment</h3>
+      <p>This virtual reality project democratizes education by offering equal, immersive, and zero-cost cultural and
+        scientific learning to students worldwide.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       8. PAUSE SCREEN
+  ============================================================ -->
+  <div id="pause-screen" class="hidden">
+    <div class="pause-inner">
+      <h2>Exploration Paused</h2>
+      <p>Your position is saved. Resume whenever you are ready.</p>
+      <button id="resume-btn" class="btn-resume">Resume Experience</button>
+      <div class="pause-controls">
+        <div class="ctrl-item"><kbd>W A S D</kbd><span>Move</span></div>
+        <div class="ctrl-item"><kbd>Drag</kbd><span>Look</span></div>
+        <div class="ctrl-item"><kbd>Click</kbd><span>Inspect</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       9. THREE.JS CDN (r158)
+  ============================================================ -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <!-- Application Entry Point -->
+  <script type="module" src="js/main.js"></script>
+
+</body>
+
+</html>
